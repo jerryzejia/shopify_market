@@ -2,6 +2,8 @@ package com.shopify.shopify_market.controller;
 
 import com.shopify.shopify_market.product.Product;
 import com.shopify.shopify_market.product.ProductService;
+import com.shopify.shopify_market.shoppingCart.ShoppingCart;
+import com.shopify.shopify_market.shoppingCart.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,8 @@ public class productController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     @GetMapping("/hello")
     public String getHelloMessage() {
@@ -24,13 +28,7 @@ public class productController {
     public void addProduct(@RequestBody Product product){
         productService.addProduct(product);
     }
-/*
-    @GetMapping("/product/{hasInventory}")
-    public List<Product> getAllProduct(@PathVariable(name = "hasInventory", required = false) String hasInventory){
-        boolean notSoldOut = hasInventory.equals("hasInventory");
-        return productService.getAllProduct(notSoldOut);
-    }
-*/
+
     @GetMapping("/product")
     public List<Product> getAllProduct(
             @RequestParam(value = "hasInventory", required = false) boolean inventory){
@@ -42,8 +40,23 @@ public class productController {
         return productService.getProduct(id);
     }
 
-    @PostMapping("/purchase/{id}")
-    public void purchaseProduct(@PathVariable(name = "id") long id){
+    @PostMapping("/purchase/{shoppingCartId}/{id}")
+    public void purchaseProduct(@PathVariable(name = "id") long id,
+                                @PathVariable(name = "shoppingCartId") long shopingCartId){
         productService.purchaseProduct(id);
+        shoppingCartService.buyItemToShopingCart(shopingCartId, productService.getProduct(id));
     }
+
+    @PostMapping("/ShoppingCart")
+    public void createNewShoppingCart(@RequestBody ShoppingCart shoppingCart){
+        shoppingCartService.addShoppingCart(shoppingCart);
+    }
+
+    @GetMapping("/ShoppingCart/{id}")
+    public ShoppingCart getShoppingCart(@PathVariable(name = "id") long id){
+       return shoppingCartService.getShoppingCart(id);
+    }
+
+
+
 }
