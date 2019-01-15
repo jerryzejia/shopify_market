@@ -58,7 +58,12 @@ public class ShoppingCart {
     }
 
     @Transient
-    public void getCartItems() {
+    public Map<Long, Integer> getCartItems(){
+        return cartItems;
+    }
+
+    @Transient
+    public void convertCartItems() {
         if (cartitemjson != null) {
             cartItems = new Gson().fromJson(cartitemjson, new TypeToken<HashMap<Long, Integer>>() {
             }.getType());
@@ -76,13 +81,13 @@ public class ShoppingCart {
      * Clear all items in shopping cart
      */
     public void clear() {
-        getCartItems();
+        convertCartItems();
         this.cartItems.clear();
         convertToJson();
     }
 
     public void removeProduct(Product product) {
-        getCartItems();
+        convertCartItems();
         if (cartItems.containsKey(product.getId())) {
             if (cartItems.get(product.getId()) - 1 > 0) {
                 cartItems.put(product.getId(), cartItems.get(product.getId()) - 1);
@@ -99,7 +104,7 @@ public class ShoppingCart {
      */
     @Transient
     public void addItem(Product product) {
-        getCartItems();
+        convertCartItems();
         if (cartItems.containsKey(product.getId()) && cartItems != null) {
             cartItems.put(product.getId(), cartItems.get(product.getId()) + 1);
         } else {
