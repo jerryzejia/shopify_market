@@ -45,4 +45,11 @@ SQL script for the database is included inside the DB folder.
 
 
 ## Interaction
-
+| HTTP Verb | API Name        | URL Path                        | Parameter                                                                                                             | Description                                                     |
+|-----------|-----------------|---------------------------------|-----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| GET       | getProduct      | /product/{id}                   | id: product id                                                                                                        | Get Product with this specific id                               |
+| GET       | getAllProduct   | /product?hasInventory           | hasInventory:  - true = return list of non-zero inventory product - false = return all                                | Get a list of product depending on the parameter passed         |
+| GET       | getShoppingCart | /ShoppingCart/{id}              | id: Shopping Cart id                                                                                                  | Get Shopping Cart with this id                                  |
+| POST      | addProduct      | /product                        | @RequestBody Product product：the new product to be added inside                                                      | Add a new product with the specified id, name, price, inventory |
+| POST      | addShoppingCart | /ShoppingCart                   | @RequestBody ShoppingCart shoppingCart : the new shopping cart.                                                       | Add a shopping cart with the specified ID.                      |
+| POST      | purchaseProduct | /purchase/{shoppingCartId}/{id} | - shoppingCartId : id of the shopping cart that is going to contain the product  - id : id of Product to be purchased | Add a product inside a shopping cart                            |
