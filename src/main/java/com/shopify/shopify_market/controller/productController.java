@@ -24,6 +24,10 @@ public class productController {
         return "Hello Spring Boot world!";
     }
 
+    /**
+     * @param product A product that is about to be added inside the database,
+     *                represented by a JSON in request body.
+     */
     @PostMapping( "/product")
     public void addProduct(@RequestBody Product product){
         productService.addProduct(product);
@@ -47,6 +51,10 @@ public class productController {
         shoppingCartService.buyItemToShopingCart(shopingCartId, productService.getProduct(id));
     }
 
+    /**
+     * @param shoppingCart A shopping cart that is about to be added inside the database,
+     *                     represented by a JSON in request body.
+     */
     @PostMapping("/ShoppingCart")
     public void addShoppingCart(@RequestBody ShoppingCart shoppingCart){
         shoppingCartService.addShoppingCart(shoppingCart);
@@ -55,6 +63,16 @@ public class productController {
     @GetMapping("/ShoppingCart/{id}")
     public ShoppingCart getShoppingCart(@PathVariable(name = "id") long id){
        return shoppingCartService.getShoppingCart(id);
+    }
+
+    @DeleteMapping("/ShoppingCart/{id}")
+    public void deleteShoppingCart(@PathVariable(name = "id") long id){
+        shoppingCartService.deteleShoppingCart(id);
+    }
+
+    @DeleteMapping("/product/{id}")
+    public void deleteProduct(@PathVariable(name = "id") long id){
+        productService.deleteProduct(id);
     }
 
 
