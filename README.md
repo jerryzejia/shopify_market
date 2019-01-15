@@ -38,10 +38,31 @@ SQL script for the database is included inside the DB folder.
 | HTTP Verb | API Name           | URL Path                        | Parameter                                                                                                             | Description                                                     |
 |-----------|--------------------|---------------------------------|-----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
 | GET       | getProduct         | /product/{id}                   | (long) id: product id                                                                                                        | Get Product with this specific id                               |
-| GET       | getAllProduct      | /product?hasInventory           | boolean hasInventory:  - true = return list of non-zero inventory product - false = return all                                | Get a list of product depending on the parameter passed         |
+| GET       | getAllProduct      | /product?hasInventory           | boolean hasInventory: <br> true = return list of non-zero inventory product <br> false = return all product                               | Get a list of product depending on the parameter passed         |
 | GET       | getShoppingCart    | /ShoppingCart/{id}              | (long) id: Shopping Cart id                                                                                                  | Get Shopping Cart with this id                                  |
 | POST      | addProduct         | /product                        | @RequestBody (JSON) Product product：the new product to be added inside                                | Add a new product with the specified id, name, price, inventory |
 | POST      | addShoppingCart    | /ShoppingCart                   | @RequestBody (JSON) ShoppingCart shoppingCart : the new shopping cart                                  | Add a shopping cart with the specified ID.                      |
-| POST      | purchaseProduct    | /purchase/{shoppingCartId}/{id} | - shoppingCartId : id of the shopping cart that is going to contain the product  - id : id of Product to be purchased | Add a product inside a shopping cart                            |
-| Delete    | deleteProduct      | /product/{id}                   | id: product id                                                                                                        | Delete product with this id                                     |
-| Delete    | deleteShoppingCart | /ShoppingCart/{id}              | id: Shopping Cart id                                                                                                  | Delete shoping cart with this id                                |
+| POST      | purchaseProduct    | /purchase/{shoppingCartId}/{id} | (long) shoppingCartId : id of the shopping cart that is going to contain the product  <br>  (long)id : id of Product to be purchased | Add a product inside a shopping cart                            |
+| Delete    | deleteProduct      | /product/{id}                   | (long) id: product id                                                                                                        | Delete product with this id                                     |
+| Delete    | deleteShoppingCart | /ShoppingCart/{id}              | (long) id: Shopping Cart id                                                                                                  | Delete shoping cart with this id                                |
+
+
+This API connects to http://localhost:8080. 
+Initializing a product would send a Get request with a body of:
+~~~~
+{
+	"id": 1,
+	"name":"java",
+	"inventory":1000,
+	"price" : 80
+}
+~~~~
+Initializing a shopping cart would send a Get request with a body of:
+~~~~
+{
+	"id": 1,
+}
+~~~~
+
+
+
