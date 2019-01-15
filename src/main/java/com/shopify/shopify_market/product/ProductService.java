@@ -12,6 +12,11 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    /**
+     * @param notSoldOut boolean, true: return only non-zero inventory product
+     *                            false: return all product
+     * @return a list of product depending on passed in parameter.
+     */
     public  List<Product> getAllProduct(boolean notSoldOut){
         List<Product> productArrayList = new ArrayList<>();
         if(!notSoldOut){
@@ -26,6 +31,10 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    /**
+     * @param id Id of product
+     * @return the product if it exists, null if does not
+     */
     public Product getProduct (long id){
         return productRepository.findById(id).orElse(null);
     }
@@ -34,6 +43,10 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    /**
+     * @param id ID of product to be purchased
+     *           automatically remove 1 inventory from the product
+     */
     public void purchaseProduct(long id){
         Product product = getProduct(id);
         int inventory = product.getInventory();

@@ -9,6 +9,10 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
+    /**
+     * @return list of non-zero inventory products
+     *         empty list if everything is sold out.
+     */
     @Query("SELECT r FROM Product r where r.inventory > 0")
     List<Product> nonEmptyInventory();
 
